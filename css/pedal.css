@@ -1,0 +1,71 @@
+/* general (top to bottom) */
+.pedal {
+  background: linear-gradient(#757575, #bdbdbd);
+  border-radius: 10px;
+  display: inline-block;
+  height: 60vh;
+  margin-right: 4%;
+  transition: all .4s;
+  /*width: calc(60vh * 0.6);*/
+  width: 36vh;
+}
+
+/* knobs */
+.pedal .knob {
+  display: inline-block;
+  float: left;
+  height: 14vh;
+  margin: 2vh 2vh 0 2vh;
+  transition: all .4s;
+  width: 13vh;
+}
+.pedal .knob.right {
+  float: right;
+}
+.pedal .knob.center {
+  font-size: 2.5vh;
+  height: 11vh;
+  margin: 2vh 0 0 13vh;
+  width: 10vh;
+}
+.pedal .knob.center.bottom {
+  margin-top: 0vh;
+}
+.knob input {
+  color: inherit !important;
+  font-family: inherit !important;
+}
+.pedal .knob span {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  transform: translate(0, -100%);
+}
+.pedal .knob.center.bottom span {
+  transform: none;
+}
+
+/* name */
+.pedal .name {
+  display: block;
+  font-size: 8vh;
+  position: absolute;
+  text-align: center;
+  top: 33vh;
+  width: 36vh;
+}
+
+/* bypass button */
+.pedal .bypass {
+  border: 0.5vh solid #efefef;
+  border-radius: 6vh;
+  box-sizing: border-box;
+  display: block;
+  height: 6vh;
+  margin: 49vh 0 0 15vh;
+  position: absolute;
+  width: 6vh;
+}
+.pedal .bypass.on {
+  background: #BF360C;
+}

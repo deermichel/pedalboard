@@ -1,0 +1,138 @@
+/* general */
+body {
+  background: #37476D;
+  color: #efefef;
+  cursor: default;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 3vh;
+  line-height: 1.4;
+  margin: 0px;
+  padding: 0px;
+}
+a {
+  color: #efefef;
+  text-decoration: none;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  margin: 0;
+}
+
+
+/* header */
+header {
+}
+#title {
+  font-size: 8vh;
+  position: fixed;
+  text-align: center;
+  top: 10%;
+  transition: all .4s;
+  width: 100%;
+}
+.showallpedals #title,
+.normal #title {
+  font-size: 7vh;
+  top: 2%;
+}
+
+
+/* content */
+main {
+}
+#addpedal {
+  border: 0.35vh solid transparent;
+  border-radius: 18vh;
+  box-sizing: border-box;
+  font-size: 17vh;
+  height: 18vh;
+  line-height: 17vh;
+  margin-left: calc(50vw - 9vh);
+  margin-top: calc(50vh - 9vh);
+  opacity: .7;
+  position: fixed;
+  text-align: center;
+  transition: all .4s;
+  width: 18vh;
+  z-index: 1;
+}
+#addpedal:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+.showallpedals #addpedal {
+  border-color: #efefef;
+  border-radius: 8vh;
+  font-size: 7.5vh;
+  height: 8vh;
+  line-height: 7.5vh;
+  margin: 0;
+  right: 3vh;
+  top: 3vh;
+  transform: rotate(45deg);
+  width: 8vh;
+}
+.normal #addpedal {
+  border-color: transparent;
+  border-radius: 8vh;
+  font-size: 7.5vh;
+  height: 8vh;
+  line-height: 7.5vh;
+  margin: 0;
+  right: 3vh;
+  top: 3vh;
+  transform: none;
+  width: 8vh;
+}
+
+/* overview with all pedals */
+#allpedals {
+  left: 52%;
+  position: fixed;
+  top: 54%;
+  transform: translate(50%, -50%);
+  transition: all .4s;
+  width: 96%;
+  white-space: nowrap;
+}
+.showallpedals #allpedals {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+#allpedals .pedal:hover {
+  transform: translate(0, -1vh);
+}
+
+/* the only true pedalboard */
+#pedalboard {
+  left: 52%;
+  position: fixed;
+  top: 54%;
+  transform: translate(-50%, 100%);
+  transition: all .4s;
+  width: 96%;
+  white-space: nowrap;
+}
+.normal #pedalboard {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+
+/* footer */
+footer {
+  bottom: 0px;
+  font-size: 2vh;
+  left: 0;
+  position: fixed;
+  width: 100%;
+}
+#copyright {
+  margin-left: 1%;
+}
+
+
+/* responsive */
+@media screen and (max-width: 960px) {
+
+}

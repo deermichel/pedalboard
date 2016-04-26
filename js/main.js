@@ -10,11 +10,11 @@ if (window.location.host != "127.0.0.1:3000" && window.location.protocol != "htt
 // vars
 var input = new Tone.ExternalInput().toMaster();
 // var input = new Tone.Player({
-//   "url": "demo.mp3",
+//   "url": "output.wav",
 //   "autostart": true,
 //   "loop": true,
 // }).toMaster();
-var pedalTypes = ["delay", /*"distortion",*/ "reverb", "tremolo"];
+var pedalTypes = ["delay", /*"distortion",*/ "reverb", "superverb", "tremolo"];
 var pedalUIs = [];
 var pedalFXs = [];
 

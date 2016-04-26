@@ -45,6 +45,36 @@
   transform: none;
 }
 
+/* buttons */
+.pedal .button {
+  display: inline-block;
+  float: left;
+  height: 14vh;
+  margin: 2vh 2vh 0 2vh;
+  transition: all .4s;
+  width: 13vh;
+}
+.pedal .button.right {
+  float: right;
+}
+.pedal .button div {
+  border: 0.5vh solid #efefef;
+  border-radius: 5vh;
+  box-sizing: border-box;
+  display: block;
+  height: 5vh;
+  margin: 3vh auto 2vh auto;
+  width: 5vh;
+}
+.pedal .button.on div {
+  background: #64B5F6;
+}
+.pedal .button span {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+}
+
 /* name */
 .pedal .name {
   display: block;

@@ -8,24 +8,36 @@ if (window.location.host != "127.0.0.1:3000" && window.location.protocol != "htt
 
 
 // vars
-var input = new Tone.ExternalInput().toMaster();
-// var input = new Tone.Player({
-//   "url": "output.wav",
-//   "autostart": true,
-//   "loop": true,
-// }).toMaster();
-var pedalTypes = ["delay", /*"distortion",*/ "reverb", "superverb", "tremolo"];
+var input;
+var pedalTypes = [/*"chorus", "compressor", */"delay", /*"distortion", "eq", "pitchshifter", */"reverb", "superverb", "tremolo"];
 var pedalUIs = [];
 var pedalFXs = [];
 
 
-input.open(function() {
-  input.start();
-});
-
-
 // main code
 $(function() {
+
+  // get available inputs
+  Tone.ExternalInput.getSources(function(sources) {
+
+    if (sources.length == 0) {
+      $("#intro").addClass("hideselect");
+      $("#getready").hide();
+      // TODO: whaaaat?
+
+    } else if (sources.length == 1) {
+      $("#intro").addClass("hideselect");
+
+    }
+
+    for (var i = 0; i < sources.length; i++) {
+      $("#selectinput").append($('<option>', {
+        value: i,
+        text: sources[i].label
+      }));
+    }
+
+  });
 
   // load available pedals (knobs!)
   for (var i = 0; i < pedalTypes.length; i++) {
@@ -35,25 +47,19 @@ $(function() {
     });
   }
 
+  // start monitoring and switch to normal mode
+  $("#getready").click(function() {
+
+    input = new Tone.ExternalInput($("#selectinput").val()).toMaster();
+    input.open(function() {
+      input.start();
+    });
+
+    $("body").attr("class", "normal");
+  });
 
   $("#addpedal").click(function() {
-
-    if ($("body").hasClass("showallpedals")) {
-      if (pedalUIs.length == 0) {
-        $("body").removeAttr("class");
-      } else {
-        $("body").toggleClass("showallpedals normal");
-      }
-    }
-
-    else if ($("body").hasClass("normal")) {
-      $("body").attr("class", "showallpedals");
-    }
-
-    else {
-      $("body").attr("class", "showallpedals");
-    }
-
+    $("body").toggleClass("showallpedals normal");
   });
 
 
@@ -81,13 +87,6 @@ $(function() {
     $("body").toggleClass("showallpedals normal");
 
   });
-
-  // bypass clicked
-  // $("#pedalboard").on("click", ".pedal .bypass", function() {
-  //   $(this).toggleClass("on");
-  //   var index = pedalUIs.indexOf($(this).parent()[0]);
-  //   pedalFXs[index].wet.value = ($(this).hasClass("on")) ? () : 0;
-  // });
 
 });
 

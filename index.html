@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Pedalboard</title>
@@ -20,14 +20,15 @@
     <link rel="stylesheet" href="css/pedal.css" type="text/css">
 
   </head>
-  <body>
+  <body class="start">
 
     <!-- TODO: add <noscript> -->
     <!-- TODO: add share function (link base64 + qrcode) -->
     <!-- TODO: add intro and help, input selection etc. -->
     <!-- TODO: velocity for better anim (no scrollbars while switching between modes -> absolute/fixed) -->
     <!-- TODO: better pedal styling (custom font etc.) -->
-    <!-- TODO: soundcloud/dropbox export? -->
+    <!-- TODO: record + soundcloud/dropbox export? -->
+    <!-- TODO: add not supported dialog -->
 
 
     <!-- header -->
@@ -37,6 +38,27 @@
 
     <!-- content -->
     <main>
+
+      <div id="getready"><i class="icon ion-ios-play"></i></div>
+
+      <div id="intro">
+
+        <p>
+          <i class="icon ion-ios-mic-outline"></i>
+          <select id="selectinput" name="inputs"></select>
+          <i class="icon ion-ios-information-outline"></i>
+        </p>
+
+        <!-- <p>
+          This is Pedalboard, an web live audio manipulation experiment.
+          Connect your guitar or mic to your computer using an audio interface.
+          Depending on your software and hardware configuration, there might be a
+          noticable latency (remember - it's an experiment). For best results use
+          Google Chrome.
+        </p> -->
+
+      </div>
+
 
       <div id="addpedal"><i class="icon ion-ios-plus-empty"></i></div>
 
@@ -49,6 +71,10 @@
     <!-- footer -->
     <footer>
       <span id="copyright">&#169; 2016 Micha Hanselmann.</span>
+      <span id="footlinks">
+        <!-- Help &#8729;  -->
+        <a href="https://github.com/DeerMichel/pedalboard">GitHub</a>
+      </span>
     </footer>
 
 

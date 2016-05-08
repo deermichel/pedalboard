@@ -16,7 +16,7 @@
   float: left;
   height: 14vh;
   margin: 2vh 2vh 0 2vh;
-  transition: all .4s;
+  /*transition: all .4s;*/
   width: 13vh;
 }
 .pedal .knob.right {

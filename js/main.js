@@ -17,27 +17,49 @@ var pedalFXs = [];
 // main code
 $(function() {
 
-  // get available inputs
-  Tone.ExternalInput.getSources(function(sources) {
+  // browser supported?
+  if (!Tone.ExternalInput.supported) {
+    $("#message").html("Sorry, your browser is currently not supported. Try Chrome.");
+    return;
+  }
 
-    if (sources.length == 0) {
-      $("#intro").addClass("hideselect");
-      $("#getready").hide();
-      // TODO: whaaaat?
+  // wait for mic access
+  var _test = new Tone.ExternalInput().open(function(error) {
 
-    } else if (sources.length == 1) {
-      $("#intro").addClass("hideselect");
-
+    if (error) {
+      return; // not allowed
+    } else {
+      $("#message").hide(); // all ok
+      _test.close();
     }
 
-    for (var i = 0; i < sources.length; i++) {
-      $("#selectinput").append($('<option>', {
-        value: i,
-        text: sources[i].label
-      }));
-    }
+    // get available inputs
+    Tone.ExternalInput.getSources(function(sources) {
+
+      if (sources.length == 0) {  // ok, that's weird (firefox bug?)
+        // $("#message").html("No audio input found.").show();
+        // return;
+
+      } else if (sources.length > 1) {  // selectable
+        $("#intro").removeClass("hideselect");
+
+      }
+
+      // add inputs to dropdown menu
+      for (var i = 0; i < sources.length; i++) {
+        $("#selectinput").append($("<option>", {
+          value: i,
+          text: (sources[i].label == "") ? ("input " + (i+1)) : sources[i].label
+        }));
+      }
+
+      // let's be ready
+      $("#getready").show();
+
+    });
 
   });
+
 
   // load available pedals (knobs!)
   for (var i = 0; i < pedalTypes.length; i++) {
@@ -58,6 +80,7 @@ $(function() {
     $("body").attr("class", "normal");
   });
 
+  // switch between normal and addpedal mode
   $("#addpedal").click(function() {
     $("body").toggleClass("showallpedals normal");
   });

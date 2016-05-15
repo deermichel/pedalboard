@@ -9,6 +9,7 @@ if (window.location.host != "127.0.0.1:3000" && window.location.protocol != "htt
 
 // vars
 var input;
+var recorder;
 var pedalTypes = ["chorus", /*"compressor", */"delay", /*"distortion", "eq", "pitchshifter", */"reverb", "superverb", "tremolo"];
 var pedalUIs = [];
 var pedalFXs = [];
@@ -75,6 +76,7 @@ $(function() {
     input = new Tone.ExternalInput($("#selectinput").val()).toMaster();
     input.open(function() {
       input.start();
+      recorder = new Recorder(Tone.Master)
     });
 
     $("body").attr("class", "normal");
@@ -83,6 +85,44 @@ $(function() {
   // switch between normal and addpedal mode
   $("#addpedal").click(function() {
     $("body").toggleClass("showallpedals normal");
+  });
+
+  // record button
+  $("#record").click(function() {
+
+    if (recorder.recording) {
+
+      // stop recording
+      recorder.stop();
+      $("#record").removeClass("recording");
+      $("#recordshare").addClass("show");
+
+    } else {
+
+      // start recording
+      recorder.record();
+      $("#record").addClass("recording");
+      $("#recordshare").removeClass("show");
+
+    }
+
+  });
+
+  // record share actions
+  $("#recordshare i.ion-ios-download-outline").click(function() {
+
+    // download wav
+    recorder.exportWAV(function(blob) {
+      Recorder.forceDownload(blob, "Pedalboard_" + Math.floor(Date.now() / 1000) + ".wav");
+    });
+
+  });
+  $("#recordshare i.ion-ios-close-outline").click(function() {
+
+    // delete recording
+    recorder.clear();
+    $("#recordshare").removeClass("show");
+
   });
 
 

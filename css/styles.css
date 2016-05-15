@@ -131,6 +131,61 @@ main {
   transform: none;
 }
 
+#record {
+  background: #efefef;
+  border-radius: 6vh;
+  height: 6vh;
+  margin: 0;
+  opacity: .7;
+  position: fixed;
+  left: 3vh;
+  text-align: center;
+  top: -6vh;
+  transition: all .4s;
+  width: 6vh;
+  z-index: 1;
+}
+#record:hover {
+  background: #F44336;
+}
+.normal #record {
+  top: 4vh;
+}
+#record.recording {
+  background: #F44336;
+  border-radius: 0.5vh;
+}
+#record.recording:hover {
+  opacity: 1;
+}
+
+#recordshare {
+  background-color: #37476D;
+  border: 1px solid #efefef;
+  border-radius: 6px;
+  font-size: 6vh;
+  margin: 0;
+  opacity: .7;
+  padding: 0 1vh;
+  position: fixed;
+  left: 3vh;
+  top: 12vh;
+  transform: translate(-130%, 0); /* TODO: -110% for 5 options */
+  transition: all .4s;
+  z-index: 1;
+}
+.normal #recordshare.show {
+  transform: none;
+}
+#recordshare i {
+  margin: 0 1vh;
+  opacity: .7;
+  transition: all .4s;
+}
+#recordshare i:hover {
+  opacity: 1;
+}
+
 /* introduction and help */
 #intro {
   font-size: 2.5vh;

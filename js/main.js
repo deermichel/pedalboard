@@ -112,8 +112,47 @@ $(function() {
   $("#recordshare i.ion-ios-download-outline").click(function() {
 
     // download wav
-    recorder.exportWAV(function(blob) {
-      Recorder.forceDownload(blob, "Pedalboard_" + Math.floor(Date.now() / 1000) + ".wav");
+    // recorder.exportWAV(function(blob) {
+    //   Recorder.forceDownload(blob, "Pedalboard_" + Math.floor(Date.now() / 1000) + ".wav");
+    // });
+
+    // mp3 export
+    recorder.getBuffer(function(buffers) {
+
+      // encode mp3
+      var encoder = new lamejs.Mp3Encoder(2, 44100, 256);
+      var mp3Data = [];
+      var sampleBlockSize = 1152;
+
+      var left = new Int16Array(buffers[0].length);
+      var right = new Int16Array(buffers[1].length);
+
+      for (var i = 0; i < buffers[0].length; i++) {
+        left[i] = convert(buffers[0][i]);
+        right[i] = convert(buffers[1][i]);
+      }
+      function convert(n) {
+        var v = n < 0 ? n * 32768 : n * 32767;
+        return Math.max(-32768, Math.min(32768, v));
+      }
+
+      for (var i = 0; i < buffers[0].length; i += sampleBlockSize) {
+        var chunkL = left.subarray(i, i + sampleBlockSize);
+        var chunkR = right.subarray(i, i + sampleBlockSize);
+        var buffer = encoder.encodeBuffer(chunkL, chunkR);
+        if (buffer.length > 0) {
+          mp3Data.push(buffer);
+        }
+      }
+      var buffer = encoder.flush();
+      if (buffer.length > 0) {
+        mp3Data.push(buffer);
+      }
+
+      // download mp3
+      var blob = new Blob(mp3Data, {type: "audio/mp3"});
+      Recorder.forceDownload(blob, "Pedalboard_" + Math.floor(Date.now() / 1000) + ".mp3");
+
     });
 
   });

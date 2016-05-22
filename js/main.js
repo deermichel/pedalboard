@@ -112,11 +112,12 @@ $(function() {
   $("#recordshare i.ion-ios-download-outline").click(function() {
 
     // download wav
-    // recorder.exportWAV(function(blob) {
-    //   Recorder.forceDownload(blob, "Pedalboard_" + Math.floor(Date.now() / 1000) + ".wav");
-    // });
+    recorder.exportWAV(function(blob) {
+      Recorder.forceDownload(blob, "Pedalboard_" + Math.floor(Date.now() / 1000) + ".wav");
+    });
 
     // mp3 export
+    /*
     recorder.getBuffer(function(buffers) {
 
       // encode mp3
@@ -153,6 +154,40 @@ $(function() {
       var blob = new Blob(mp3Data, {type: "audio/mp3"});
       Recorder.forceDownload(blob, "Pedalboard_" + Math.floor(Date.now() / 1000) + ".mp3");
 
+    });
+    */
+
+  });
+  $("#recordshare i.ion-ios-cloud-outline").click(function() {
+
+    // upload to SoundCloud
+    
+    // connect and upload
+    SC.connect().then(function() {
+      recorder.exportWAV(function(blob) {
+
+        $("#recordshare i").css("visibility", "hidden");    // hide share options
+
+        var upload = SC.upload({    // start upload process
+          file: blob,
+          title: "Pedalboard Recording " + new Date().toLocaleString(),
+          description: "Check out Pedalboard: https://deermichel.github.io/pedalboard/",
+          progress: function(e) {
+            $("#recordshare span").html(Math.round(((e.loaded / e.total) * 100)) + "%");  // progress in %
+          }
+        }).then(function(track) {   // upload finished
+            $("#recordshare span").html($("<a>", {    // add link to new track
+              text: "Link",
+              href: track.permalink_url,
+              target: "_blank",
+              click: function() {     // reset UI
+                $("#recordshare span").html("");
+                $("#recordshare i").css("visibility", "");
+              }
+            }));
+        });
+
+      });
     });
 
   });
@@ -217,3 +252,10 @@ function rewire() {
   input.start();
 
 }
+
+
+// init SoundCloud SDK
+SC.initialize({
+  client_id: "aa8ffd757dea381ac3ac2eb5abe894df",
+  redirect_uri: "https://deermichel.github.io/pedalboard/soundcloud_callback.html"
+});

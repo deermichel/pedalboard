@@ -185,6 +185,14 @@ main {
 #recordshare i:hover {
   opacity: 1;
 }
+#recordshare span {
+  left: 0;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
 
 /* introduction and help */
 #intro {

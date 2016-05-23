@@ -158,10 +158,64 @@ $(function() {
     */
 
   });
+  $("#recordshare i.ion-social-dropbox-outline").click(function() {
+
+    // upload to Dropbox
+
+    /* TODO: wait for Dropbox Saver blob support
+    recorder.exportWAV(function(blob) {
+      var url = URL.createObjectURL(blob);
+      Dropbox.save(url, "output.wav", {
+
+        success: function() {   // reset UI
+          $("#recordshare span").html("");
+          $("#recordshare i").css("visibility", "");
+        },
+        progress: function(progress) {
+          $("#recordshare span").html(Math.round(progress * 100) + "%");  // progress in %
+        },
+        cancel: function() {    // reset UI
+          $("#recordshare span").html("");
+          $("#recordshare i").css("visibility", "");
+        },
+        error: function(error) {
+          console.log(error);
+        }
+
+      });
+    });*/
+
+    var client = new Dropbox.Client({key: "3epn6pjiuqxttt8"});
+    client.authDriver(new Dropbox.AuthDriver.Popup({
+      receiverUrl: "https://deermichel.github.io/pedalboard/dropbox_callback.html"
+    }));
+    client.authenticate(function(error, client) {
+      if (error) return;
+      recorder.exportWAV(function(blob) {
+
+        $("#recordshare i").css("visibility", "hidden");    // hide share options
+
+        var xhrListener = function(dbXhr) {
+          dbXhr.xhr.upload.addEventListener("progress", function(e) {
+            $("#recordshare span").html(Math.round(((e.loaded / e.total) * 100)) + "%");  // progress in %
+          });
+          return true;
+        }
+        client.onXhr.addListener(xhrListener);
+        client.writeFile("Pedalboard_" + Math.floor(Date.now() / 1000) + ".wav", blob, function(error, stat) {
+          $("#recordshare span").html("");    // reset UI
+          $("#recordshare i").css("visibility", "");
+        });
+        client.onXhr.removeListener(xhrListener);
+
+      });
+    });
+
+  });
   $("#recordshare i.ion-ios-cloud-outline").click(function() {
 
     // upload to SoundCloud
-    
+
     // connect and upload
     SC.connect().then(function() {
       recorder.exportWAV(function(blob) {

@@ -341,7 +341,7 @@ function updateUrl() {
   if (pedals.length > 0) {
     var values = [];
     for (var i = 0; i < pedals.length; i++) values.push(pedals[i].getValues());
-    history.replaceState("", "", "/?val=" + encodeURIComponent(btoa(values.join(";"))));
+    history.replaceState("", "", "?val=" + encodeURIComponent(btoa(values.join(";"))));
   }
   setTimeout(updateUrl, 1000);
 }

@@ -170,7 +170,7 @@ main {
   position: fixed;
   left: 3vh;
   top: 12vh;
-  transform: translate(-130%, 0); /* TODO: -110% for 5 options */
+  transform: translate(-130%, 0);
   transition: all .4s;
   z-index: 1;
 }

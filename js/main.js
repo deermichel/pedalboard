@@ -72,7 +72,7 @@ $(function() {
   // preload values if given
   var values = [];
   try {
-    values = (getUrlVars()["val"]) ? atob(decodeURIComponent(getUrlVars()["val"])).split(";") : [];
+    values = (window.location.hash.length > 0) ? atob(decodeURIComponent(window.location.hash.substring(1))).split(";") : [];
   } catch(error) {
     console.error("Ignoring invalid URL parameter");
   }
@@ -326,22 +326,12 @@ SC.initialize({
   redirect_uri: "https://deermichel.github.io/pedalboard/soundcloud_callback.html"
 });
 
-// helper func - get vars from url
-function getUrlVars() {
-  var vars = {};
-  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
-  function(m,key,value) {
-    vars[key] = value;
-  });
-  return vars;
-}
-
 // helper func - update frequently URL with values of pedals (for sharing)
 function updateUrl() {
   if (pedals.length > 0) {
     var values = [];
     for (var i = 0; i < pedals.length; i++) values.push(pedals[i].getValues());
-    history.replaceState(null, "", window.location.pathname + "?val=" + encodeURIComponent(btoa(values.join(";"))));
+    window.location.hash = encodeURIComponent(btoa(values.join(";")));
   }
   setTimeout(updateUrl, 1000);
 }

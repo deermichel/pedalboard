@@ -84,6 +84,8 @@ $.get("pedals/superverb.html", function(data) {
 
   rewire();
 
+}).done(function() {
+  if (queuedScripts.length > 0) $.getScript(queuedScripts.shift());
 });
 
 })();

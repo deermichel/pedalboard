@@ -12,6 +12,7 @@ var input;
 var recorder;
 var pedalTypes = ["chorus", /*"compressor", */"delay", /*"distortion", "eq", "pitchshifter", */"reverb", "superverb", "tremolo"];
 var pedals = [];
+var queuedScripts = [];
 
 
 // main code
@@ -76,7 +77,10 @@ $(function() {
   } catch(error) {
     console.error("Ignoring invalid URL parameter");
   }
-  for (var i = 0; i < values.length; i++) $.getScript("pedals/" + values[i].split(",")[0] + ".js"); // execute pedal script
+  for (var i = 0; i < values.length; i++) {
+    queuedScripts.push("pedals/" + values[i].split(",")[0] + ".js");
+  }
+  if (queuedScripts.length > 0) $.getScript(queuedScripts.shift());
 
   // start monitoring and switch to normal mode
   $("#getready").click(function() {

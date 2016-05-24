@@ -77,6 +77,8 @@ $.get("pedals/reverb.html", function(data) {
   // rewire audio nodes
   rewire();
 
+}).done(function() {
+  if (queuedScripts.length > 0) $.getScript(queuedScripts.shift());   // important for preloading
 });
 
 })();

@@ -11,8 +11,7 @@ if (window.location.host != "127.0.0.1:3000" && window.location.protocol != "htt
 var input;
 var recorder;
 var pedalTypes = ["chorus", /*"compressor", */"delay", /*"distortion", "eq", "pitchshifter", */"reverb", "superverb", "tremolo"];
-var pedalUIs = [];
-var pedalFXs = [];
+var pedals = [];
 
 
 // main code
@@ -70,14 +69,34 @@ $(function() {
     });
   }
 
+  // preload values if given
+  var values = [];
+  try {
+    values = (getUrlVars()["val"]) ? atob(decodeURIComponent(getUrlVars()["val"])).split(";") : [];
+  } catch(error) {
+    console.error("Ignoring invalid URL parameter");
+  }
+  for (var i = 0; i < values.length; i++) $.getScript("pedals/" + values[i].split(",")[0] + ".js"); // execute pedal script
+
   // start monitoring and switch to normal mode
   $("#getready").click(function() {
 
-    input = new Tone.ExternalInput($("#selectinput").val()).toMaster();
+    input = new Tone.ExternalInput($("#selectinput").val());
     input.open(function() {
       input.start();
       recorder = new Recorder(Tone.Master)
     });
+
+    // set values (not best solution - but works ^^)
+    for (var i = 0; i < values.length; i++) {
+      pedals[i].setValues(values[i]);
+    }
+
+    // update URL with current values
+    updateUrl();
+
+    // connect all
+    rewire();
 
     $("body").attr("class", "normal");
   });
@@ -260,19 +279,8 @@ $(function() {
     // get pedal type
     var type = $(this).attr("class").replace("pedal", "").trim();
 
-    // load html and add it (setup pedal)
-    $.get("pedals/" + type + ".html", function(data) {
-
-      // store ui
-      var ui = $(data).appendTo($("#pedalboard"));
-      pedalUIs.push(ui[0]);
-
-      // execute pedal script and rewire audio nodes
-      $.getScript("pedals/" + type + ".js").done(function() {
-        rewire();
-      });
-
-    });
+    // execute pedal script and rewire audio nodes
+    $.getScript("pedals/" + type + ".js");
 
     // close allpedals and show pedalboard
     $("body").toggleClass("showallpedals normal");
@@ -284,20 +292,24 @@ $(function() {
 
 // connect the audio nodes
 function rewire() {
+  if (!input) return;
 
   input.stop();
   input.disconnect();
 
-  if (pedalFXs.length > 0) {
+  if (pedals.length > 0) {
 
-    input.connect(pedalFXs[0]);
+    var nodes = [];
+    for (var i = 0; i < pedals.length; i++) Array.prototype.push.apply(nodes, pedals[i].nodes);
 
-    for (var i = 0; i < pedalFXs.length - 1; i++) {
-      pedalFXs[i].disconnect();
-      pedalFXs[i].connect(pedalFXs[i + 1]);
+    input.connect(nodes[0]);
+
+    for (var i = 0; i < nodes.length - 1; i++) {
+      nodes[i].disconnect();
+      nodes[i].connect(nodes[i + 1]);
     }
 
-    pedalFXs[pedalFXs.length - 1].toMaster();
+    nodes[nodes.length - 1].toMaster();
 
   } else {
     input.toMaster();
@@ -313,3 +325,23 @@ SC.initialize({
   client_id: "aa8ffd757dea381ac3ac2eb5abe894df",
   redirect_uri: "https://deermichel.github.io/pedalboard/soundcloud_callback.html"
 });
+
+// helper func - get vars from url
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+  function(m,key,value) {
+    vars[key] = value;
+  });
+  return vars;
+}
+
+// helper func - update frequently URL with values of pedals (for sharing)
+function updateUrl() {
+  if (pedals.length > 0) {
+    var values = [];
+    for (var i = 0; i < pedals.length; i++) values.push(pedals[i].getValues());
+    history.replaceState("", "", "/?val=" + encodeURIComponent(btoa(values.join(";"))));
+  }
+  setTimeout(updateUrl, 1000);
+}

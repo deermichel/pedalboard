@@ -61,7 +61,6 @@ $(function() {
 
   });
 
-
   // load available pedals (knobs!)
   for (var i = 0; i < pedalTypes.length; i++) {
     $.get("pedals/" + pedalTypes[i] + ".html", function(data) {
@@ -276,7 +275,6 @@ $(function() {
 
   });
 
-
   // pedal selected -> add
   $("#allpedals").on("click", ".pedal", function() {
 
@@ -289,6 +287,73 @@ $(function() {
     // close allpedals and show pedalboard
     $("body").toggleClass("showallpedals normal");
 
+  });
+
+  // drag events - drag started / ended
+  $("#pedalboard").on("dragstart", ".pedal", function(e) {
+    $(this).addClass("dragged");
+    e.originalEvent.dataTransfer.effectAllowed = "move";
+    for (var i = 0; i < pedals.length; i++) {
+      if (pedals[i].ui[0] == $(this)[0]) {
+        e.originalEvent.dataTransfer.setData("text/plain", i);    // get source pedal
+        break;
+      }
+    }
+  });
+  $("#pedalboard").on("dragend", ".pedal", function() {
+    $(this).removeClass("dragged");
+  });
+
+  // drag events - drag hovered / left another pedal
+  $("#pedalboard").on("dragenter", ".pedal", function() {
+    $(this).addClass("over");
+  });
+  $("#pedalboard").on("dragleave", ".pedal", function() {
+    $(this).removeClass("over");
+  });
+
+  // drag events - drag moved / finished
+  $("#pedalboard").on("dragover", ".pedal", function(e) {
+    if (e.preventDefault) e.preventDefault();
+    e.originalEvent.dataTransfer.dropEffect = "move";
+    return false;
+  });
+  $("#pedalboard").on("drop", ".pedal", function(e) {
+    $(this).removeClass("over");
+    if (e.stopPropagation) e.stopPropagation();
+
+    // get source and destination pedal
+    var src = e.originalEvent.dataTransfer.getData("text/plain");
+    var dest;
+    for (var i = 0; i < pedals.length; i++) {
+      if (pedals[i].ui[0] == $(this)[0]) {
+        dest = i;
+        break;
+      }
+    }
+    if (dest != src) {
+
+      // swap UIs
+      var srcUI = $(pedals[src].ui);
+      var destUI = $(pedals[dest].ui);
+      var tmp = $("<span>").hide();
+      srcUI.before(tmp);
+      destUI.before(srcUI);
+      tmp.replaceWith(destUI);
+
+      // swap pedal objects
+      tmp = pedals[dest];
+      pedals[dest] = pedals[src];
+      pedals[src] = tmp;
+
+      // rewire (prevent loops caused by swap!)
+      var nodes = [];
+      for (var i = 0; i < pedals.length; i++) Array.prototype.push.apply(nodes, pedals[i].nodes);
+      for (var i = 0; i < nodes.length; i++) nodes[i].disconnect();
+      rewire();
+
+    }
+    return false;
   });
 
 });

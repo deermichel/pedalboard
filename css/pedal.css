@@ -9,6 +9,12 @@
   /*width: calc(60vh * 0.6);*/
   width: 36vh;
 }
+.pedal.dragged {
+  opacity: .7;
+}
+.pedal.over {
+  transform: scale(.95);
+}
 
 /* knobs */
 .pedal .knob {

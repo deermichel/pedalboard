@@ -109,6 +109,11 @@ $(function() {
     $("body").toggleClass("showallpedals normal");
   });
 
+  // switch to delete pedal mode
+  $("#delpedal").click(function() {
+    $("body").toggleClass("deletepedal");
+  });
+
   // record button
   $("#record").click(function() {
 
@@ -356,6 +361,26 @@ $(function() {
     return false;
   });
 
+  // pedal clicked during delete mode -> remove pedal
+  $("#pedalboard").on("click", ".pedal", function() {
+    if (!$("body").hasClass("deletepedal")) return;
+
+    // remove pedal from array
+    for (var i = 0; i < pedals.length; i++) {
+      if (pedals[i].ui[0] == $(this)[0]) {
+        pedals.splice(i, 1);
+        break;
+      }
+    }
+
+    // remove UI
+    $(this).remove();
+
+    // rewire
+    rewire();
+
+  });
+
 });
 
 
@@ -401,6 +426,8 @@ function updateUrl() {
     var values = [];
     for (var i = 0; i < pedals.length; i++) values.push(pedals[i].getValues());
     window.location.hash = encodeURIComponent(btoa(values.join(";")));
+  } else {
+    window.location.hash = "";
   }
   setTimeout(updateUrl, 1000);
 }

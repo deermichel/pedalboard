@@ -130,6 +130,34 @@ main {
   top: 2.75vh;
   transform: none;
 }
+.deletepedal #addpedal {
+  top: -8vh;
+}
+
+#delpedal {
+  font-size: 5.5vh;
+  height: 6vh;
+  line-height: 6vh;
+  margin: 0;
+  opacity: .7;
+  position: fixed;
+  right: 12vh;
+  text-align: center;
+  top: -7vh;
+  transition: all .4s;
+  width: 7vh;
+  z-index: 1;
+}
+#delpedal:hover {
+  opacity: 1;
+}
+.normal #delpedal {
+  top: 3.9vh;
+}
+.deletepedal #delpedal {
+  color: #EF5350;
+  right: 3vh;
+}
 
 #record {
   background: #efefef;

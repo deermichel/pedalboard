@@ -15,6 +15,12 @@
 .pedal.over {
   transform: scale(.95);
 }
+.deletepedal .pedal {
+  opacity: .7;
+}
+.deletepedal .pedal:hover {
+  opacity: 1;
+}
 
 /* knobs */
 .pedal .knob {

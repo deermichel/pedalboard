@@ -106,12 +106,46 @@ $(function() {
 
   // switch between normal and addpedal mode
   $("#addpedal").click(function() {
-    $("body").toggleClass("showallpedals normal");
+    if ($("body").hasClass("showshare")) {
+      $("body").toggleClass("showshare normal");
+    } else {
+      $("body").removeClass("showmore");
+      $("body").toggleClass("showallpedals normal");
+    }
   });
 
   // switch to delete pedal mode
   $("#delpedal").click(function() {
+    $("body").removeClass("showmore");
     $("body").toggleClass("deletepedal");
+  });
+
+  // switch to show more (menu) mode
+  $("#more").click(function() {
+    $("body").toggleClass("showmore");
+  });
+
+  // share button
+  $("#share").click(function() {
+
+    // ui stuff
+    $("body").removeClass("showmore");
+    $("body").toggleClass("showshare normal");
+
+    // generate QR code
+    qr.image({
+      image: document.getElementById("qrcode"),
+      value: window.location.href,
+      level: "L",
+      size: 10
+    });
+
+    // set image link
+    $("#qrcodelink").attr("href", $("#qrcode").attr("src")).attr("download", "Pedalboard_qr" + Math.floor(Date.now() / 1000) + ".png");
+
+    // set link text and select all
+    $("#sharelink").val(window.location.href).select();
+
   });
 
   // record button

@@ -17,6 +17,9 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   margin: 0;
 }
+textarea:focus, input:focus {
+  outline: none;
+}
 
 /* tooltip */
 .tooltip {
@@ -56,7 +59,8 @@ header {
   width: 100%;
 }
 .showallpedals #title,
-.normal #title {
+.normal #title,
+.showshare #title {
   font-size: 7vh;
   top: 2%;
 }
@@ -120,7 +124,8 @@ main {
 #addpedal:hover {
   opacity: 1;
 }
-.showallpedals #addpedal {
+.showallpedals #addpedal,
+.showshare #addpedal {
   border-color: #efefef;
   top: 2.75vh;
   transform: rotate(45deg);
@@ -129,6 +134,9 @@ main {
   border-color: transparent;
   top: 2.75vh;
   transform: none;
+}
+.showmore #addpedal {
+  right: 10vh;
 }
 .deletepedal #addpedal {
   top: -8vh;
@@ -154,8 +162,61 @@ main {
 .normal #delpedal {
   top: 3.9vh;
 }
+.showmore #delpedal {
+  right: 18vh;
+}
 .deletepedal #delpedal {
   color: #EF5350;
+  right: 3vh;
+}
+
+#more {
+  font-size: 5.5vh;
+  height: 6vh;
+  line-height: 6vh;
+  margin: 0;
+  opacity: .7;
+  position: fixed;
+  right: 20vh;
+  text-align: center;
+  top: -7vh;
+  transform: rotate(90deg);
+  transition: all .4s;
+  width: 7vh;
+  z-index: 1;
+}
+#more:hover {
+  opacity: 1;
+}
+.normal #more {
+  top: 3.9vh;
+}
+.showmore #more {
+  right: 25vh;
+  transform: none;
+}
+.deletepedal #more {
+  top: -8vh;
+}
+
+#share {
+  font-size: 5.5vh;
+  height: 6vh;
+  line-height: 6vh;
+  margin: 0;
+  opacity: .7;
+  position: fixed;
+  right: -7vh;
+  text-align: center;
+  top: 3.9vh;
+  transition: all .4s;
+  width: 7vh;
+  z-index: 1;
+}
+#share:hover {
+  opacity: 1;
+}
+.showmore #share {
   right: 3vh;
 }
 
@@ -291,6 +352,38 @@ main {
 }
 #allpedals .pedal:hover {
   transform: translate(0, -1vh);
+}
+
+
+#qrcode {
+  height: 60vh;
+  left: 50vw;
+  position: fixed;
+  top: 110vh;
+  transform: translate(-50%, 0);
+  transition: all .4s;
+  width: 60vh;
+}
+.showshare #qrcode {
+  top: 19vh;
+}
+
+#sharelink {
+  background-color: transparent;
+  border: 0px solid;
+  color: #efefef;
+  font-family: inherit;
+  font-size: 4vh;
+  left: 50vw;
+  position: fixed;
+  text-align: center;
+  top: 110vh;
+  transform: translate(-50%, 0);
+  transition: all .4s;
+  width: 70vw;
+}
+.showshare #sharelink {
+  top: 86vh;
 }
 
 

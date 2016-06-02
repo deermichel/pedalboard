@@ -10,7 +10,7 @@ if (window.location.host != "127.0.0.1:3000" && window.location.protocol != "htt
 // vars
 var input;
 var recorder;
-var pedalTypes = ["chorus", /*"compressor", */"delay", /*"distortion",*/ "eq", "pitchshifter", "reverb", "superverb", "tremolo"];
+var pedalTypes = ["chorus", "compressor", "delay", /*"distortion",*/ "eq", "pitchshifter", "reverb", "superverb", "tremolo"];
 var pedals = [];
 var queuedScripts = [];
 

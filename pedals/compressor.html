@@ -1,21 +1,26 @@
-<div class="pedal compressor" draggable="true">
+<div class="pedal compressor" draggable="true" style="background: linear-gradient(#323232, #616161);">
 
   <div class="knob">
-    <input class="compressorthreshold" type="text" value="-20" data-min="-60" data-max="0" data-angleOffset="-125" data-angleArc="250" data-height="100%" data-fgColor="#90CAF9" data-bgColor="#efefef">
-    <span>THRESHOLD</span>
+    <input class="compressorthreshold" type="text" value="-20" data-min="-40" data-max="0" data-step="0.5" data-angleOffset="-125" data-angleArc="250" data-height="100%" data-fgColor="#757575" data-bgColor="#efefef">
+    <span>THOLD</span>
   </div>
 
   <div class="knob right">
-    <input class="compressorratio" type="text" value="6" data-min="1" data-max="30" data-angleOffset="-125" data-angleArc="250" data-height="100%" data-fgColor="#90CAF9" data-bgColor="#efefef">
+    <input class="compressorratio" type="text" value="3" data-min="1" data-max="20" data-step="0.5" data-angleOffset="-125" data-angleArc="250" data-height="100%" data-fgColor="#757575" data-bgColor="#efefef">
     <span>RATIO</span>
   </div>
 
-  <div class="knob center bottom">
-    <span>MAKEUP</span>
-    <input class="compressormakeup" type="text" value="50" data-angleOffset="-125" data-angleArc="250" data-height="100%" data-fgColor="#90CAF9" data-bgColor="#efefef">
+  <div class="knob">
+    <input class="compressorattack" type="text" value="50" data-min="0" data-max="200" data-step="1" data-angleOffset="-125" data-angleArc="250" data-height="100%" data-fgColor="#757575" data-bgColor="#efefef">
+    <span>ATCK</span>
   </div>
 
-  <span class="name">Compressor</span>
+  <div class="knob right">
+    <input class="compressorrelease" type="text" value="250" data-min="5" data-max="1000" data-step="5" data-angleOffset="-125" data-angleArc="250" data-height="100%" data-fgColor="#757575" data-bgColor="#efefef">
+    <span>RLSE</span>
+  </div>
+
+  <span class="name" style="font-size: 6vh; padding-top: 1vh;">Compressor</span>
 
   <div class="bypass on"></div>
 

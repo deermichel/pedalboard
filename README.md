@@ -5,7 +5,7 @@ Connect your guitar or mic to your computer using an audio interface.
 Depending on your software and hardware configuration, there might be a
 noticeable latency (remember - it's an experiment). For best results use
 Google Chrome. *(To be honest, Chrome is the only browser supporting all
-features without problems. :smirk:)*
+features without problems.* :smirk:*)*
 
 [![screenshot](img/screenshot.png)](https://deermichel.github.io/pedalboard/#ZGlzdG9ydGlvbiwyODAwLDI4LC00LDE7ZGVsYXksNjQwLDI1LDMxLDA7c3VwZXJ2ZXJiLDE0MDAsMjQsMSw0MywwO3JldmVyYiw3NCw5NjAwLDM5LDA%3D)
 
@@ -42,3 +42,26 @@ with drag and drop.
 * [Recorder.js](https://github.com/mattdiamond/Recorderjs) ([MIT](https://github.com/mattdiamond/Recorderjs#license-mit))
 * [Dropbox.js](https://github.com/dropbox/dropbox-js) ([MIT](https://github.com/dropbox/dropbox-js/blob/stable/LICENSE.txt))
 * [qr.js](http://neocotic.com/qr.js/) ([GPL v3](https://github.com/neocotic/qr.js/blob/master/LICENSE.md))
+* [Ionicons](http://ionicons.com/) ([MIT](https://github.com/driftyco/ionicons/blob/master/LICENSE))
+
+### License
+
+This project is released under the GNU GPL v3 License. (See [LICENSE](https://github.com/DeerMichel/pedalboard/blob/gh-pages/LICENSE) for more information.)
+
+```
+Pedalboard - Online guitar pedalboard
+Copyright (c) 2016 Micha Hanselmann
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+```

@@ -248,7 +248,7 @@ $(function() {
 
     var client = new Dropbox.Client({key: "3epn6pjiuqxttt8"});
     client.authDriver(new Dropbox.AuthDriver.Popup({
-      receiverUrl: "https://deermichel.github.io/pedalboard/dropbox_callback.html"
+      receiverUrl: "https://deermichel.me/pedalboard/dropbox_callback.html"
     }));
     client.authenticate(function(error, client) {
       if (error) return;
@@ -286,7 +286,7 @@ $(function() {
         var upload = SC.upload({    // start upload process
           file: blob,
           title: "Pedalboard Recording " + new Date().toLocaleString(),
-          description: "Check out Pedalboard: https://deermichel.github.io/pedalboard/",
+          description: "Check out Pedalboard: https://deermichel.me/pedalboard/",
           progress: function(e) {
             $("#recordshare span").html(Math.round(((e.loaded / e.total) * 100)) + "%");  // progress in %
           }
@@ -451,7 +451,7 @@ function rewire() {
 // init SoundCloud SDK
 SC.initialize({
   client_id: "aa8ffd757dea381ac3ac2eb5abe894df",
-  redirect_uri: "https://deermichel.github.io/pedalboard/soundcloud_callback.html"
+  redirect_uri: "https://deermichel.me/pedalboard/soundcloud_callback.html"
 });
 
 // helper func - update frequently URL with values of pedals (for sharing)
